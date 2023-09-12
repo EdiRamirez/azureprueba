@@ -1,0 +1,9 @@
+{
+	"name": "adf-cursosql",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "29d85cbb-32ae-441a-a46d-2b1b89fa8afa",
+		"tenantId": "dc934b7d-a0d8-4652-bbca-8cfb407ca319"
+	}
+}
