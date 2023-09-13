@@ -94,9 +94,22 @@
 				}
 			}
 		],
+		"parameters": {
+			"schema": {
+				"type": "string",
+				"defaultValue": "dbo"
+			},
+			"schema2": {
+				"type": "string",
+				"defaultValue": "finance"
+			}
+		},
 		"variables": {
 			"table": {
-				"type": "String"
+				"type": "Array",
+				"defaultValue": [
+					"LogisticsAddressCountryRegionStaging"
+				]
 			}
 		},
 		"annotations": []
