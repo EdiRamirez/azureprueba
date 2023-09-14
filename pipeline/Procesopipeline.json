@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Recupera tablas",
+				"name": "Recupera_tablas",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -28,7 +28,8 @@
 							"schema": "ctrl",
 							"table": "integracion_hub"
 						}
-					}
+					},
+					"firstRowOnly": false
 				}
 			},
 			{
@@ -36,7 +37,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Recupera tablas",
+						"activity": "Recupera_tablas",
 						"dependencyConditions": [
 							"Succeeded"
 						]
