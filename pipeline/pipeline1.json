@@ -76,7 +76,11 @@
 							"inputs": [
 								{
 									"referenceName": "AzureSqlTable1",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": "dbo",
+										"table": "LogisticsAddressCountryRegionStaging"
+									}
 								}
 							],
 							"outputs": [
@@ -84,8 +88,14 @@
 									"referenceName": "AzureSqlTable2",
 									"type": "DatasetReference",
 									"parameters": {
-										"schema": "dbo",
-										"table": "finance"
+										"schema": {
+											"value": "@item().schema2",
+											"type": "Expression"
+										},
+										"table": {
+											"value": "@item().table",
+											"type": "Expression"
+										}
 									}
 								}
 							]
