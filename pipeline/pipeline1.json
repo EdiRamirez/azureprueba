@@ -89,7 +89,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"schema": {
-											"value": "@item().schema2",
+											"value": "@item().schema",
 											"type": "Expression"
 										},
 										"table": {
