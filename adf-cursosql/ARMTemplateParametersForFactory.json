@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-cursosql"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"SqlServer1_connectionString": {
+			"value": ""
+		},
+		"sqldbbaseprueba1_connectionString": {
+			"value": ""
+		},
+		"sqldbbaseprueba120230908T2310Z_connectionString": {
+			"value": ""
+		},
+		"sqldbbaseprueba2_connectionString": {
+			"value": ""
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://kb-nombrekv.vault.azure.net/"
+		}
+	}
+}

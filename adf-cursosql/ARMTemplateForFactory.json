@@ -1,0 +1,751 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Nombre de instancia de Data Factory",
+			"defaultValue": "adf-cursosql"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"connectionString\"de \"AzureSqlDatabase1\""
+		},
+		"SqlServer1_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"connectionString\"de \"SqlServer1\""
+		},
+		"sqldbbaseprueba1_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"connectionString\"de \"sqldbbaseprueba1\""
+		},
+		"sqldbbaseprueba120230908T2310Z_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"connectionString\"de \"sqldbbaseprueba120230908T2310Z\""
+		},
+		"sqldbbaseprueba2_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"connectionString\"de \"sqldbbaseprueba2\""
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://kb-nombrekv.vault.azure.net/"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "table",
+							"value": {
+								"value": "@json('[\n\n    {\n        \"schema\": \"dbo\",    \n        \"schema2\": \"finance\",        \n        \"tabla\":\"LogisticsAddressCountryRegionStaging\" ,   \n        \"pk_integracion\": \"COUNTRYREGION\"\n        },\n\n         \n       \n]')",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Set variable1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('table')",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy data1",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"tableOption": "autoCreate",
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "AzureSqlTable1",
+											"type": "DatasetReference",
+											"parameters": {
+												"schema": "dbo",
+												"table": "LogisticsAddressCountryRegionStaging"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "AzureSqlTable2",
+											"type": "DatasetReference",
+											"parameters": {
+												"schema": {
+													"value": "@item().schema2",
+													"type": "Expression"
+												},
+												"table": {
+													"value": "@item().table",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"schema": {
+						"type": "string",
+						"defaultValue": "dbo"
+					},
+					"schema2": {
+						"type": "string",
+						"defaultValue": "finance"
+					}
+				},
+				"variables": {
+					"table": {
+						"type": "Array",
+						"defaultValue": [
+							"LogisticsAddressCountryRegionStaging"
+						]
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "sqldbbaseprueba1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"schema": {
+						"type": "string"
+					},
+					"table": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "versionnumber",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "createdby",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "createdbyname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "createdbyyominame",
+						"type": "nvarchar"
+					},
+					{
+						"name": "createdon",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "createdonbehalfby",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "createdonbehalfbyname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "createdonbehalfbyyominame",
+						"type": "nvarchar"
+					},
+					{
+						"name": "importsequencenumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "modifiedby",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "modifiedbyname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "modifiedbyyominame",
+						"type": "nvarchar"
+					},
+					{
+						"name": "modifiedon",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "modifiedonbehalfby",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "modifiedonbehalfbyname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "modifiedonbehalfbyyominame",
+						"type": "nvarchar"
+					},
+					{
+						"name": "overriddencreatedon",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "statecode",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "statecodename",
+						"type": "nvarchar"
+					},
+					{
+						"name": "statuscode",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "statuscodename",
+						"type": "nvarchar"
+					},
+					{
+						"name": "timezoneruleversionnumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "utcconversiontimezonecode",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "cic_codigomonedaextranjera",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_codigomonedalocal",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_fechaerp",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "cic_monedaextranjera",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "cic_monedaextranjeraname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_monedalocal",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "cic_monedalocalname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_nombretipocambio",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_pais",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "cic_paisname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_simbolomonedaextranjera",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_smbolomonedalocal",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_sociedadfacturacion",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "cic_sociedadfacturacionname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_sociedadfacturacionyominame",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_tipocambio",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 4
+					},
+					{
+						"name": "cic_tipocambio_base",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 4
+					},
+					{
+						"name": "cic_tipodecambioid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "cic_valorlocal",
+						"type": "bit"
+					},
+					{
+						"name": "cic_valorlocalname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "exchangerate",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 10
+					},
+					{
+						"name": "organizationid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "transactioncurrencyid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ts_carga",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/sqldbbaseprueba1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "sqldbbaseprueba120230908T2310Z",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"schema": {
+						"type": "string"
+					},
+					"table": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "versionnumber",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "createdby",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "createdbyname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "createdbyyominame",
+						"type": "nvarchar"
+					},
+					{
+						"name": "createdon",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "createdonbehalfby",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "createdonbehalfbyname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "createdonbehalfbyyominame",
+						"type": "nvarchar"
+					},
+					{
+						"name": "importsequencenumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "modifiedby",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "modifiedbyname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "modifiedbyyominame",
+						"type": "nvarchar"
+					},
+					{
+						"name": "modifiedon",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "modifiedonbehalfby",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "modifiedonbehalfbyname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "modifiedonbehalfbyyominame",
+						"type": "nvarchar"
+					},
+					{
+						"name": "overriddencreatedon",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "statecode",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "statecodename",
+						"type": "nvarchar"
+					},
+					{
+						"name": "statuscode",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "statuscodename",
+						"type": "nvarchar"
+					},
+					{
+						"name": "timezoneruleversionnumber",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "utcconversiontimezonecode",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "cic_codigomonedaextranjera",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_codigomonedalocal",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_fechaerp",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "cic_monedaextranjera",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "cic_monedaextranjeraname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_monedalocal",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "cic_monedalocalname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_nombretipocambio",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_pais",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "cic_paisname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_simbolomonedaextranjera",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_smbolomonedalocal",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_sociedadfacturacion",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "cic_sociedadfacturacionname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_sociedadfacturacionyominame",
+						"type": "nvarchar"
+					},
+					{
+						"name": "cic_tipocambio",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 4
+					},
+					{
+						"name": "cic_tipocambio_base",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 4
+					},
+					{
+						"name": "cic_tipodecambioid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "cic_valorlocal",
+						"type": "bit"
+					},
+					{
+						"name": "cic_valorlocalname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "exchangerate",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 10
+					},
+					{
+						"name": "organizationid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "transactioncurrencyid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ts_carga",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/sqldbbaseprueba120230908T2310Z')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureKeyVault1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Conexión hacia el servidor SQL",
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('SqlServer1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sqldbbaseprueba1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "sqldb-baseprueba1",
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('sqldbbaseprueba1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sqldbbaseprueba120230908T2310Z')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "sqldbbaseprueba120230908T2310Z",
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('sqldbbaseprueba120230908T2310Z_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sqldbbaseprueba2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "sqldbbaseprueba2",
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('sqldbbaseprueba2_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
