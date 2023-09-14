@@ -1,0 +1,241 @@
+{
+	"name": "AzureSqlTable11",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"schema": {
+				"type": "string"
+			},
+			"table": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "versionnumber",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "createdby",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "createdbyname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "createdbyyominame",
+				"type": "nvarchar"
+			},
+			{
+				"name": "createdon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "createdonbehalfby",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "createdonbehalfbyname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "createdonbehalfbyyominame",
+				"type": "nvarchar"
+			},
+			{
+				"name": "importsequencenumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "modifiedby",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "modifiedbyname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "modifiedbyyominame",
+				"type": "nvarchar"
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "modifiedonbehalfby",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "modifiedonbehalfbyname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "modifiedonbehalfbyyominame",
+				"type": "nvarchar"
+			},
+			{
+				"name": "overriddencreatedon",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "statecode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "statecodename",
+				"type": "nvarchar"
+			},
+			{
+				"name": "statuscode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "statuscodename",
+				"type": "nvarchar"
+			},
+			{
+				"name": "timezoneruleversionnumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "utcconversiontimezonecode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "cic_codigomonedaextranjera",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cic_codigomonedalocal",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cic_fechaerp",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "cic_monedaextranjera",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "cic_monedaextranjeraname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cic_monedalocal",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "cic_monedalocalname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cic_nombretipocambio",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cic_pais",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "cic_paisname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cic_simbolomonedaextranjera",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cic_smbolomonedalocal",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cic_sociedadfacturacion",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "cic_sociedadfacturacionname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cic_sociedadfacturacionyominame",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cic_tipocambio",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 4
+			},
+			{
+				"name": "cic_tipocambio_base",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 4
+			},
+			{
+				"name": "cic_tipodecambioid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "cic_valorlocal",
+				"type": "bit"
+			},
+			{
+				"name": "cic_valorlocalname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "exchangerate",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 10
+			},
+			{
+				"name": "organizationid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "transactioncurrencyid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ts_carga",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().table",
+				"type": "Expression"
+			}
+		}
+	}
+}
