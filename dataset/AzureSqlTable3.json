@@ -1,0 +1,24 @@
+{
+	"name": "AzureSqlTable3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sqldbbaseprueba2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tblAQSDestino": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "hub",
+			"table": {
+				"value": "@dataset().tblAQSDestino",
+				"type": "Expression"
+			}
+		}
+	}
+}
