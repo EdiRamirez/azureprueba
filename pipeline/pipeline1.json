@@ -85,7 +85,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"schema": "dbo",
-										"schema2": "finance"
+										"table": "finance"
 									}
 								}
 							]
