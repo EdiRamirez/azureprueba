@@ -9,7 +9,7 @@
 			"schema": {
 				"type": "string"
 			},
-			"schema2": {
+			"table": {
 				"type": "string"
 			}
 		},
@@ -228,8 +228,14 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "dbo",
-			"table": "LogisticsAddressCountryRegionStaging"
+			"schema": {
+				"value": "@dataset().schema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().table",
+				"type": "Expression"
+			}
 		}
 	}
 }
