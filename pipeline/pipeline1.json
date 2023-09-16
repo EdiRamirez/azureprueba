@@ -78,11 +78,7 @@
 									"referenceName": "AzureSqlTable5",
 									"type": "DatasetReference",
 									"parameters": {
-										"schema2": {
-											"value": "etx",
-											"type": "Expression"
-										},
-										"tabla": {
+										"tabladestino": {
 											"value": "@item().tabla",
 											"type": "Expression"
 										}

@@ -6,10 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"schema2": {
-				"type": "string"
-			},
-			"tabla": {
+			"tabladestino": {
 				"type": "string"
 			}
 		},
@@ -18,11 +15,11 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": {
-				"value": "@dataset().schema2",
+				"value": "etx",
 				"type": "Expression"
 			},
 			"table": {
-				"value": "@dataset().tabla",
+				"value": "@dataset().tabladestino",
 				"type": "Expression"
 			}
 		}
