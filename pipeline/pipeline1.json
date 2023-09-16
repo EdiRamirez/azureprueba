@@ -36,7 +36,7 @@
 							"typeProperties": {
 								"source": {
 									"type": "AzureSqlSource",
-									"sqlReaderQuery": "SELECT *\r\nFROM [aqs].[vw_cliente]\r\nWHERE ts_carga >= DATEADD(MINUTE, -10, GETDATE());",
+									"sqlReaderQuery": "SELECT *\r\nFROM [aqs].[vw_cliente]\r\n--WHERE ts_carga >= DATEADD(MINUTE, -10, GETDATE());",
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
