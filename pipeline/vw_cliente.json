@@ -125,6 +125,16 @@
 				}
 			}
 		],
+		"parameters": {
+			"schema": {
+				"type": "string",
+				"defaultValue": "aqs"
+			},
+			"shema2": {
+				"type": "string",
+				"defaultValue": "etx"
+			}
+		},
 		"variables": {
 			"tabla": {
 				"type": "Array",
