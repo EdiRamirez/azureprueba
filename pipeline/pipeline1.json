@@ -108,11 +108,11 @@
 		"parameters": {
 			"schema": {
 				"type": "string",
-				"defaultValue": "dbo"
+				"defaultValue": "aqs"
 			},
 			"schema2": {
 				"type": "string",
-				"defaultValue": "finance"
+				"defaultValue": "etx"
 			}
 		},
 		"variables": {
