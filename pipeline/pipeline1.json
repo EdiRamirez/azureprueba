@@ -134,10 +134,10 @@
 			}
 		},
 		"variables": {
-			"table": {
+			"tabla": {
 				"type": "Array",
 				"defaultValue": [
-					"LogisticsAddressCountryRegionStaging"
+					"vw_cliente"
 				]
 			}
 		},
