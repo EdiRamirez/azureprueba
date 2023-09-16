@@ -51,6 +51,14 @@
 			"type": "string",
 			"defaultValue": "https://kb-nombrekv.vault.azure.net/"
 		},
+		"trigger2_properties_pipeline1_parameters_schema": {
+			"type": "string",
+			"defaultValue": "aqs"
+		},
+		"trigger2_properties_pipeline1_parameters_schema2": {
+			"type": "string",
+			"defaultValue": "etx"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI de la cuenta de almacenamiento que contiene las plantillas de ARM vinculadas."
@@ -110,6 +118,12 @@
 					},
 					"AzureKeyVault1_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
+					"trigger2_properties_pipeline1_parameters_schema": {
+						"value": "[parameters('trigger2_properties_pipeline1_parameters_schema')]"
+					},
+					"trigger2_properties_pipeline1_parameters_schema2": {
+						"value": "[parameters('trigger2_properties_pipeline1_parameters_schema2')]"
 					}
 				}
 			},
