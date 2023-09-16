@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "pipeline1",
+					"referenceName": "vw_cliente",
 					"type": "PipelineReference"
 				},
 				"parameters": {
