@@ -1,0 +1,143 @@
+{
+	"name": "empleados1",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('tabla')",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "source",
+									"value": "@{item().schema}.@{item().tabla}"
+								},
+								{
+									"name": "destination",
+									"value": "@{item().schema2}.@{item().tabla}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": "SELECT *\r\nFROM [aqs].[crm_cic_configuracionipc]\r\n--WHERE ts_carga >= DATEADD(MINUTE, -10, GETDATE());",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"tableOption": "autoCreate",
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "AzureSqlTable4",
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": {
+											"value": "aqs",
+											"type": "Expression"
+										},
+										"tabla": {
+											"value": "crm_cic_configuracionipc",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "AzureSqlTable5",
+									"type": "DatasetReference",
+									"parameters": {
+										"tabladestino": {
+											"value": "@item().tabla",
+											"type": "Expression"
+										},
+										"schema2": {
+											"value": "@item().schema2",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "tabla",
+					"value": {
+						"value": "@json('[\n\n     {\n      \"schema\": \"aqs\",    \n        \"schema2\": \"etx\",     \n        \"tabla\":\"crm_cic_configuracionipc\" ,   \n        \"pk_integracion\": \"ts_carga\"\n        },\n         \n       \n]')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"schema": {
+				"type": "string",
+				"defaultValue": "aqs"
+			},
+			"schema2": {
+				"type": "string",
+				"defaultValue": "etx"
+			}
+		},
+		"variables": {
+			"tabla": {
+				"type": "Array",
+				"defaultValue": [
+					"crm_cic_configuracionipc"
+				]
+			}
+		},
+		"annotations": []
+	}
+}
