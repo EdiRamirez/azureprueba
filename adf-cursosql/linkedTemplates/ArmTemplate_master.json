@@ -51,13 +51,9 @@
 			"type": "string",
 			"defaultValue": "https://kb-nombrekv.vault.azure.net/"
 		},
-		"trigger2_properties_pipeline1_parameters_schema": {
+		"trigger2_properties_vw_cliente_parameters_schema": {
 			"type": "string",
 			"defaultValue": "aqs"
-		},
-		"trigger2_properties_pipeline1_parameters_schema2": {
-			"type": "string",
-			"defaultValue": "etx"
 		},
 		"containerUri": {
 			"type": "string",
@@ -118,16 +114,33 @@
 					},
 					"AzureKeyVault1_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
-					},
-					"trigger2_properties_pipeline1_parameters_schema": {
-						"value": "[parameters('trigger2_properties_pipeline1_parameters_schema')]"
-					},
-					"trigger2_properties_pipeline1_parameters_schema2": {
-						"value": "[parameters('trigger2_properties_pipeline1_parameters_schema2')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "adf-cursosql_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"trigger2_properties_vw_cliente_parameters_schema": {
+						"value": "[parameters('trigger2_properties_vw_cliente_parameters_schema')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-cursosql_ArmTemplate_0')]"
+			]
 		}
 	]
 }

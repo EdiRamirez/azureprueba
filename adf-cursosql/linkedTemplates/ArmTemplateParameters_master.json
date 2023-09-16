@@ -38,11 +38,8 @@
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"value": "https://kb-nombrekv.vault.azure.net/"
 		},
-		"trigger2_properties_pipeline1_parameters_schema": {
+		"trigger2_properties_vw_cliente_parameters_schema": {
 			"value": "aqs"
-		},
-		"trigger2_properties_pipeline1_parameters_schema2": {
-			"value": "etx"
 		},
 		"containerUri": {
 			"value": ""
