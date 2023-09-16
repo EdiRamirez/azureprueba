@@ -129,6 +129,12 @@
 				"defaultValue": "etx"
 			}
 		},
+		"variables": {
+			"tabla": {
+				"type": "String",
+				"defaultValue": "vw_cliente"
+			}
+		},
 		"annotations": []
 	}
 }
