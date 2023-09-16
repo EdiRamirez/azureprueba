@@ -8,6 +8,21 @@
 		"AzureSqlDatabase1_connectionString": {
 			"value": ""
 		},
+		"AzureSqlDatabase2_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase3_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase4_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase5_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase6_connectionString": {
+			"value": ""
+		},
 		"SqlServer1_connectionString": {
 			"value": ""
 		},
