@@ -28,6 +28,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"pipeline": {
+						"referenceName": "usuario",
+						"type": "PipelineReference"
+					},
 					"waitOnCompletion": true
 				}
 			},
@@ -44,6 +48,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"pipeline": {
+						"referenceName": "configuracionipc",
+						"type": "PipelineReference"
+					},
 					"waitOnCompletion": true
 				}
 			},
@@ -60,6 +68,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"pipeline": {
+						"referenceName": "gruponotificacion",
+						"type": "PipelineReference"
+					},
 					"waitOnCompletion": true
 				}
 			}
