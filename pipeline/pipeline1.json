@@ -63,11 +63,11 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"schema": {
-											"value": "@item().schema",
+											"value": "aqs",
 											"type": "Expression"
 										},
 										"tabla": {
-											"value": "@item().tabla",
+											"value": "vw_cliente",
 											"type": "Expression"
 										}
 									}
