@@ -14,7 +14,7 @@
 				"typeProperties": {
 					"variableName": "table",
 					"value": {
-						"value": "@json('[\n\n    {\n        \"schema\": \"dbo\",    \n        \"schema2\": \"finance\",        \n        \"tabla\":\"LogisticsAddressCountryRegionStaging\" ,   \n        \"pk_integracion\": \"COUNTRYREGION\"\n        },\n\n         \n       \n]')",
+						"value": "@json('[\n\n    {\n        \"schema\": \"aqs\",    \n        \"schema2\": \"etx\",        \n        \"tabla\":\"vw_cliente\" ,   \n        \"pk_integracion\": \"Codigo\"\n        },\n\n         \n       \n]')",
 						"type": "Expression"
 					}
 				}
@@ -75,25 +75,25 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "AzureSqlTable1",
+									"referenceName": "AzureSqlTable4",
 									"type": "DatasetReference",
 									"parameters": {
-										"schema": "dbo",
-										"table": "LogisticsAddressCountryRegionStaging"
+										"schema": "aqs",
+										"table": "vw_cliente"
 									}
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "AzureSqlTable2",
+									"referenceName": "AzureSqlTable5",
 									"type": "DatasetReference",
 									"parameters": {
-										"schema": {
+										"schema2": {
 											"value": "@item().schema2",
 											"type": "Expression"
 										},
 										"table": {
-											"value": "@item().tabla",
+											"value": "@item().table",
 											"type": "Expression"
 										}
 									}
