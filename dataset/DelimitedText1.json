@@ -1,0 +1,28 @@
+{
+	"name": "DelimitedText1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "datos_ejemplo.csv.csv",
+				"container": "contenedor10"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ID;Hora de inicio;Hora de finalización;Agrupación cargo;Modalidad;¿Cuán efectivos son los métodos utilizados para recopilar información sobre las necesidades y preferencias de los clientes?;¿Con qué frecuencia se actualiza y revisa el perfil del cliente ideal?; ¿Qué tan bien se alinean los productos/servicios con las expectativas y necesidades de los clientes?; ¿Qué tan efectivas son las estrategias de retención y fidelización de clientes implementadas?; ¿Se utilizan regularmente técnicas de prototipado y pruebas para validar ideas y conceptos de productos/servicios?; ¿Se integra la retroalimentación de los clientes en el proceso de desarrollo de productos/servicios?; ¿Cuán accesibles y fáciles de usar son las   plataformas y herramientas digitales para los clientes?;\"¿Se realizan mejoras continuas en la   experiencia del cliente en función de los datos y la retroalimentación   recopilada?",
+				"type": "String"
+			}
+		]
+	}
+}
